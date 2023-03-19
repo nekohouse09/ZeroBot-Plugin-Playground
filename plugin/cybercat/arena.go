@@ -31,10 +31,7 @@ func init() {
 			ctx.SendChain(message.Reply(id), message.Text("铲屎官你还没有属于你的主子喔,快去买一只吧!"))
 			return
 		}
-		if userInfo == (catInfo{}) || userInfo.User == ctx.Event.UserID {
-			ctx.SendChain(message.Reply(id), message.Text("不能自己打自己哦~"))
-			return
-		}
+
 		lastTime := time.Unix(userInfo.ArenaTime, 0)
 		if time.Since(lastTime).Hours() < 24 {
 			ctx.SendChain(message.Reply(id), message.Text(userInfo.Name, "已经PK过了,让它休息休息吧"))
@@ -48,6 +45,10 @@ func init() {
 		}
 		if duelInfo == (catInfo{}) || duelInfo.Name == "" {
 			ctx.SendChain(message.Reply(id), message.Text("他还没有属于他的猫猫,无法PK"))
+			return
+		}
+		if userInfo == (catInfo{}) || userInfo.User == ctx.Event.UserID {
+			ctx.SendChain(message.Reply(id), message.Text("不能自己打自己哦~"))
 			return
 		}
 		lastTime = time.Unix(duelInfo.ArenaTime, 0)
